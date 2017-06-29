@@ -1,0 +1,44 @@
+@(translateForm: Form[TranslationData])(implicit request: RequestHeader,  messages: Messages)
+
+@main("IBM Lightbend Language Translator") {
+
+@helper.form(action = routes.HomeController.translation()) {
+
+    <h1>Language Translator</h1>
+    @helper.inputText(translateForm("text"),'_label->"Text")
+
+
+
+@helper.select(
+field = translateForm("translateFrom"),
+options = Seq(
+"en" -> "English",
+"es" -> "Spanish",
+"fr" -> "French"
+),
+'_default -> "Choose One",
+'_label->"Translate From"
+)
+
+
+    @helper.select(
+    field = translateForm("translateTo"),
+    options = Seq(
+    "en" -> "English",
+    "es" -> "Spanish",
+    "fr" -> "French"
+    ),
+    '_default -> "Choose One",
+'_label->"Translate To"
+    )
+<button type="submit">Translate</button>
+
+<br/>
+
+@request.flash.data.map{ case (name, value) =>
+<div>@name:  @value</div>
+}
+
+}
+
+}
